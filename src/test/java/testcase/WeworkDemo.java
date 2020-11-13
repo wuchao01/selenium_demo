@@ -53,8 +53,10 @@ public class WeworkDemo {
         driver.findElement(new By.ByCssSelector("[node-type=addmember] span:nth-child(2)")).click();
         driver.findElement(By.id("username")).sendKeys("小吴");
         driver.findElement(By.id("memberAdd_english_name")).sendKeys("吃土阿加西");
+        driver.findElement(By.id("memberAdd_acctid")).sendKeys("2020111301");
         driver.findElement(By.id("memberAdd_phone")).sendKeys("18516121801");
         driver.findElement(By.cssSelector("[name=sendInvite]")).click();
+        driver.findElement(By.cssSelector("a.js_btn_save")).click();
 
 
     }
