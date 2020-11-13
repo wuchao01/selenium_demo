@@ -3,6 +3,7 @@ package testcase;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -55,8 +56,11 @@ public class WeworkDemo {
         driver.findElement(By.cssSelector("[name=sendInvite]")).click();
 
 
+    }
 
-
+    @AfterAll
+    public static void treadDown(){
+        driver.quit();
     }
 
 }
