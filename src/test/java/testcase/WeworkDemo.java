@@ -39,6 +39,7 @@ public class WeworkDemo {
     @Test
     public void login() throws IOException {
         driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome_baidu");
+        //隐式等待5秒
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         TypeReference<List<HashMap<String,Object>>> typeReference = new TypeReference<List<HashMap<String,Object>>>(){};
@@ -48,7 +49,7 @@ public class WeworkDemo {
             driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
         });
         driver.navigate().refresh();
-
+        //添加成员
         driver.findElement(new By.ByCssSelector("[node-type=addmember] span:nth-child(2)")).click();
         driver.findElement(By.id("username")).sendKeys("小吴");
         driver.findElement(By.id("memberAdd_english_name")).sendKeys("吃土阿加西");
