@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -22,13 +23,12 @@ public class WeworkDemo {
     @BeforeAll
     public static void setUp(){
         driver = new ChromeDriver();
-        driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome_baidu");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
     }
 
     @Test
     public void getCookie() throws IOException, InterruptedException {
+        driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome_baidu");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         Thread.sleep(10000);
         Set<Cookie> cookies = driver.manage().getCookies();
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
@@ -47,6 +47,16 @@ public class WeworkDemo {
             driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
         });
         driver.navigate().refresh();
+
+        driver.findElement(new By.ByCssSelector("[node-type=addmember] span:nth-child(2)")).click();
+        driver.findElement(By.id("username")).sendKeys("小吴");
+        driver.findElement(By.id("memberAdd_english_name")).sendKeys("吃土阿加西");
+        driver.findElement(By.id("memberAdd_phone")).sendKeys("18516121801");
+        driver.findElement(By.cssSelector("[name=sendInvite]")).click();
+
+
+
+
     }
 
 }
