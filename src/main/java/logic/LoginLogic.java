@@ -1,10 +1,8 @@
-package testcase;
+package logic;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 
@@ -15,9 +13,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class WeworkDemo {
-    public WebDriver driver;
-    @Test
+public class LoginLogic {
+    private WebDriver driver;
+
+    public LoginLogic(WebDriver driver){
+        this.driver = driver;
+    }
+
+    //获取登录企业微信cookie
     public void getCookie() throws IOException, InterruptedException {
         driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome_baidu");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -27,7 +30,7 @@ public class WeworkDemo {
         mapper.writeValue(new File("cookies.yaml"),cookies);
     }
 
-    @Test
+    //使用企业微信cookie绕过二维码扫码登录
     public void login() throws IOException {
         driver.get("https://work.weixin.qq.com/wework_admin/loginpage_wx?from=myhome_baidu");
         //隐式等待5秒
@@ -39,14 +42,5 @@ public class WeworkDemo {
         cookies.forEach(cookieMap -> {
             driver.manage().addCookie(new Cookie(cookieMap.get("name").toString(),cookieMap.get("value").toString()));
         });
-        driver.navigate().refresh();
-        //添加成员
-        driver.findElement(new By.ByCssSelector("[node-type=addmember] span:nth-child(2)")).click();
-        driver.findElement(By.id("username")).sendKeys("小吴");
-        driver.findElement(By.id("memberAdd_english_name")).sendKeys("吃土阿加西");
-        driver.findElement(By.id("memberAdd_acctid")).sendKeys("2020111301");
-        driver.findElement(By.id("memberAdd_phone")).sendKeys("18516121801");
-        driver.findElement(By.cssSelector("[name=sendInvite]")).click();
-        driver.findElement(By.cssSelector("a.js_btn_save")).click();
     }
 }
