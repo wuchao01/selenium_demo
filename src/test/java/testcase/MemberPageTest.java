@@ -9,8 +9,6 @@ import page.MainPage;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
 public class MemberPageTest {
 
     private static MainPage main;
@@ -29,20 +27,23 @@ public class MemberPageTest {
     @ParameterizedTest
     @MethodSource("getUserInfo")
     public void testMember(String username,String englishName,String acctid,String mobile) {
-        main.addMember(username,englishName,acctid,mobile);
+        main.addMember(username,englishName,acctid,mobile).updateMember("小吴","小天","阿加西")
+        .deleteMember();
     }
 
-    @ParameterizedTest
-    @MethodSource("updateUserInfo")
-    public void testUpdateDepartment(String username,String updateName,String updateEnglishName){
-        main.updateMember(username,updateName,updateEnglishName).deleteMember(updateName);
+//    单独写始终无法执行，暂时没找到原因
+//    @Order(2)
+//    @ParameterizedTest
+//    @MethodSource("updateUserInfo")
+//    public void testUpdateDepartment(String userName,String updateName,String updateEnglishName){
+//        main.updateMember(userName,updateName,updateEnglishName).deleteMember();
+//    }
+
+    public static Stream<Arguments> getUserInfo(){
+        return Stream.of(Arguments.of("小吴","吃土阿加西","20201115","13711122234"));
     }
 
-    public static Stream<String> getUserInfo(){
-        return Stream.of("小吴","吃土阿加西","20201115","137111222345");
-    }
-
-    public static Stream<Arguments> updateUserInfo(){
-        return Stream.of(arguments("小吴"),arguments("小天","阿加西"));
-    }
+//    public static Stream<Object> updateUserInfo(){
+//        return Stream.of(Arguments.of("小吴"),Arguments.of("小天","阿加西"));
+//    }
 }

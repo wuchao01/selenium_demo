@@ -2,11 +2,12 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ContactPage extends BasePage{
 
-    public ContactPage(WebDriver driver) {
-        super(driver);
+    public ContactPage(WebDriver driver, WebDriverWait wait) {
+        super(driver,wait);
     }
 
     public ContactPage addDepartment(String departmentName){

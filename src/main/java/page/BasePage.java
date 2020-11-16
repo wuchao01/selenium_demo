@@ -2,11 +2,14 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
     WebDriver driver;
-    public BasePage(WebDriver driver) {
+    WebDriverWait wait;
+    public BasePage(WebDriver driver, WebDriverWait wait) {
         this.driver = driver;
+        this.wait = wait;
     }
 
     public BasePage() {
@@ -17,6 +20,7 @@ public class BasePage {
     }
 
     public void sendKeys(By by,String context){
+        driver.findElement(by).clear();
         driver.findElement(by).sendKeys(context);
     }
 

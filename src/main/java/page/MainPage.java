@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 public class MainPage extends BasePage{
     public MainPage() throws IOException, InterruptedException {
         this.beforeAll();
@@ -22,6 +24,7 @@ public class MainPage extends BasePage{
     public void beforeAll() throws IOException, InterruptedException {
         File file = new File("cookies.yaml");
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         if(file.exists()){
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.get("https://work.weixin.qq.com/wework_admin/frame");
@@ -36,7 +39,7 @@ public class MainPage extends BasePage{
         }else {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             driver.get("https://work.weixin.qq.com/wework_admin/frame");
-            Thread.sleep(10000);
+            sleep(10000);
             Set<Cookie> cookies = driver.manage().getCookies();
             ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
             mapper.writeValue(new File("cookies.yaml"),cookies);
@@ -51,25 +54,27 @@ public class MainPage extends BasePage{
         sendKeys(By.id("memberAdd_english_name"),englishName);
         sendKeys(By.id("memberAdd_acctid"),acctid);
         sendKeys(By.id("memberAdd_phone"),mobile);
-        click(By.linkText("修改"));
-        click(By.linkText("测试部"));
-        click(By.linkText("确认"));
-        click(By.cssSelector("[name=sendInvite]"));
+//        click(By.linkText("修改"));
+//        sendKeys(By.cssSelector(".ww_searchInput input:nth-child(3)"),"测试部");
+//        click(By.linkText("霍格沃兹测试学院/测试部"));
+//        click(By.linkText("确认"));
+//        click(By.cssSelector("[name=sendInvite]"));
         click(By.linkText("保存"));
         return this;
     }
 
-    public MainPage updateMember(String username, String updateName, String updateEnglishName){
-        click(By.linkText(username));
+    public MainPage updateMember(String userName,String updateName, String updateEnglishName) {
+//        WebElement nameEle = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("[title=小吴]")));
+//        nameEle.click("[title=小吴]");
+        click(By.cssSelector("[title=" + userName + "]"));
         click(By.linkText("编辑"));
         sendKeys(By.id("username"),updateName);
-        sendKeys(By.id("memberAdd_english_name"),updateEnglishName);
+        sendKeys(By.id("memberEdit_english_name"),updateEnglishName);
         click(By.linkText("保存"));
         return this;
     }
 
-    public MainPage deleteMember(String username){
-        click(By.linkText(username));
+    public MainPage deleteMember(){
         click(By.linkText("删除"));
         click(By.linkText("确认"));
         return this;
@@ -77,7 +82,7 @@ public class MainPage extends BasePage{
 
     public ContactPage contact() {
         click(By.id("menu_contacts"));
-        return new ContactPage(driver);
+        return new ContactPage(driver,wait);
     }
 
 
