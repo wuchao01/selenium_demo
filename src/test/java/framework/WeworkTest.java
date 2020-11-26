@@ -19,6 +19,7 @@ public class WeworkTest {
 //        driver.findElement(By.id("search-button")).click();
 //        driver.findElement(By.id("search-term")).sendKeys("search demo");
         System.out.println(data);
+        data.run();
     }
 
     public static Stream<CaseData> data() throws IOException {

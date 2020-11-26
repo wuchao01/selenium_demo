@@ -1,0 +1,12 @@
+data:
+  - banana
+  - apple
+
+steps:
+  - chrome: {}
+  - get: "https://ceshiren.com"
+  - implicitlyWait: 5
+  - find: { id: "search-button" }
+  - find: { id: "search-term" }
+  - click: {}
+  - sendkeys: "search demo"
