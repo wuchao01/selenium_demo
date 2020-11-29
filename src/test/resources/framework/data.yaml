@@ -9,4 +9,4 @@ steps:
   - find: { id: "search-button" }
   - click: {}
   - find: { id: "search-term" }
-  - sendkeys: "search demo"
+  - sendkeys: "$data"

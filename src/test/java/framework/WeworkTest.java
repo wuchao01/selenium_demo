@@ -6,13 +6,13 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
-import java.util.stream.Stream;
+import java.util.ArrayList;
 
 public class WeworkTest {
 
     @ParameterizedTest
     @MethodSource("data")
-    public void search(CaseData data){
+    public void search(TestCase data){
 //        ChromeDriver driver = new ChromeDriver();
 //        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 //        driver.get("https://ceshiren.com");
@@ -22,9 +22,9 @@ public class WeworkTest {
         data.run();
     }
 
-    public static Stream<CaseData> data() throws IOException {
+    public static ArrayList<TestCase> data() throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        CaseData data = mapper.readValue(WeworkTest.class.getResourceAsStream("/framework/data.yaml"),CaseData.class);
-        return Stream.of(data);
+        TestCase data = mapper.readValue(WeworkTest.class.getResourceAsStream("/framework/data.yaml"), TestCase.class);
+        return data.testCaseGenerate();
     }
 }

@@ -10,24 +10,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class CaseData {
+public class TestCase {
     public List<String> data;
     public List<HashMap<String, Object>> steps;
     private WebDriver driver;
     private WebElement element;
+    public int index = 0;
 
+    public Object getValue(HashMap<String,Object> step, String key){
+        Object value = step.get(key);
+        //解析yaml得到参数，复杂结构应用递归实现判断
+        if (value instanceof String){
+            return ((String) value).replace("$data",data.get(index));
+        }else {
+            return value;
+        }
+    }
+
+    public ArrayList<TestCase> testCaseGenerate(){
+        ArrayList<TestCase> testCaseList = new ArrayList();
+        for (int i = 0; i < data.size(); i++) {
+            TestCase testCaseNew = new TestCase();
+            testCaseNew.index = i;
+            testCaseNew.steps = steps;
+            testCaseNew.data = data;
+            testCaseList.add(testCaseNew);
+        }
+        return testCaseList;
+    }
+
+    //testCase引擎，复杂解析yaml生成关键字驱动用例
     public void run(){
         steps.forEach(step -> {
             if (step.keySet().contains("chrome")){
                 driver = new ChromeDriver();
             }else if (step.keySet().contains("get")){
-                driver.get(step.get("get").toString());
+                driver.get(getValue(step,"get").toString());
             } else if (step.keySet().contains("implicitlyWait")){
-                System.out.println("延迟等待时间：" + step.get("implicitlyWait").toString());
-                driver.manage().timeouts().implicitlyWait(Integer.parseInt(step.get("implicitlyWait").toString()),TimeUnit.SECONDS);
+                System.out.println("延迟等待时间：" + getValue(step,"implicitlyWait").toString());
+                driver.manage().timeouts().implicitlyWait(
+                        Long.valueOf(getValue(step,"implicitlyWait").toString()),TimeUnit.SECONDS);
             }else if (step.keySet().contains("find")){
                 ArrayList<By> arrayList = new ArrayList<>();
-                ((HashMap<String,String>)step.get("find")).entrySet().forEach(str ->{
+                ((HashMap<String,String>)getValue(step,"find")).entrySet().forEach(str ->{
                     if (str.getKey().contains("id")){
                         System.out.println("元素:" + str.getValue());
                         arrayList.add(By.id(str.getValue()));
@@ -46,7 +71,7 @@ public class CaseData {
                 element.click();
             }
             if (step.keySet().contains("sendkeys")){
-                element.sendKeys("search demo");
+                element.sendKeys(getValue(step,"sendkeys").toString());
             }
         });
     }
