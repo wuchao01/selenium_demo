@@ -3,7 +3,9 @@ data:
   - apple
 
 steps:
-  - init: { mainPage,framework.MainPage }
+#  反射用第一个init，yaml的PO驱动用第二个
+#  - init: [ mainPage,framework.MainPage ]
+  - init: [ mainPage,"main_po.yaml" ]
   - mainPage.search: {}
 #  - find: { id: "search-term" }
 #  - sendkeys: "$data"

@@ -2,25 +2,19 @@ package framework;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class BasePage {
     static BasePage instance = null;
     HashMap<String,BasePage> pages = new HashMap<>();
     HashMap<String, List<HashMap<String, Object>>> yamlSource=new HashMap<>();
+    private SeleniumTest testCase = new SeleniumTest();
     WebDriver driver;
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -37,8 +31,10 @@ public class BasePage {
     }
 
     public void poInit(String name,String className) throws Exception {
-        BasePage pageClass = (BasePage) Class.forName(className).getDeclaredConstructor().newInstance();
-        ObjectMapper mapper = new ObjectMapper();
+        //动态创建类并实例化为一个对象
+//        BasePage pageClass = (BasePage) Class.forName(className).getDeclaredConstructor().newInstance();
+        BasePage pageClass = new BasePage();
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         TypeReference<HashMap<String,List<HashMap<String,Object>>>> typeReference = new TypeReference<HashMap<String, List<HashMap<String, Object>>>>() {
         };
         pageClass.yamlSource = mapper.readValue(ParamsTest.class.getResourceAsStream(String.format("/framework/%s",className)),typeReference);
@@ -52,14 +48,19 @@ public class BasePage {
     }
 
     public void stepRun(String method){
-        Method methedJava = Arrays.stream(this.getClass().getDeclaredMethods()).filter(m -> m.getName().equals(method)).findFirst().get();
-        try {
-            methedJava.invoke(this);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
+//        反射找java方法
+//        Method methodJava = Arrays.stream(this.getClass().getDeclaredMethods()).filter(m -> m.getName().equals(method)).findFirst().get();
+//        try {
+//            methodJava.invoke(this);
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (InvocationTargetException e) {
+//            e.printStackTrace();
+//        }
+        List<HashMap<String, Object>> steps = yamlSource.get(method);
+        testCase.steps = steps;
+        testCase.data = Arrays.asList("");
+        testCase.run();
     }
 
 

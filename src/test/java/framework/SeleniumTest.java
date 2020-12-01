@@ -1,7 +1,6 @@
 package framework;
 
 
-
 import java.util.ArrayList;
 
 public class SeleniumTest extends TestCase{
