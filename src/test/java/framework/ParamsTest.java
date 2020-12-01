@@ -20,7 +20,7 @@ public class ParamsTest{
 
     public static List<TestCase> search() throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        TestCase testCase = mapper.readValue(ParamsTest.class.getResourceAsStream("/framework/search_po_test.yaml"),SeleniumTest.class);
+        TestCase testCase = mapper.readValue(ParamsTest.class.getResourceAsStream("/framework/search_po_test.yaml"),POTestCase.class);
         return testCase.testCaseGenerate();
     }
 
