@@ -1,0 +1,9 @@
+data:
+  - banana
+  - apple
+
+steps:
+  - init: { mainPage,framework.MainPage }
+  - mainPage.search: {}
+#  - find: { id: "search-term" }
+#  - sendkeys: "$data"

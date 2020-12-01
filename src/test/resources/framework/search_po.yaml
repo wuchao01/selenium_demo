@@ -1,0 +1,9 @@
+data:
+  - banana
+  - apple
+
+steps:
+  - find: { id: "search-button" }
+  - click: {}
+  - find: { id: "search-term" }
+  - sendkeys: "$data"

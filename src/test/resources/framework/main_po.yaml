@@ -1,0 +1,5 @@
+
+steps:
+  - chrome: {}
+  - get: "https://ceshiren.com"
+  - implicitlyWait: 5

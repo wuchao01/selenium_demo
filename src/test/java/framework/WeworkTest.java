@@ -7,6 +7,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class WeworkTest {
 
@@ -22,7 +23,7 @@ public class WeworkTest {
         data.run();
     }
 
-    public static ArrayList<TestCase> data() throws IOException {
+    public static List<TestCase> data() throws IOException {
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         TestCase data = mapper.readValue(WeworkTest.class.getResourceAsStream("/framework/data.yaml"), TestCase.class);
         return data.testCaseGenerate();
