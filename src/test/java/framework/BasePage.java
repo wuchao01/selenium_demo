@@ -14,7 +14,7 @@ public class BasePage {
     static BasePage instance = null;
     HashMap<String,BasePage> pages = new HashMap<>();
     HashMap<String, List<HashMap<String, Object>>> yamlSource=new HashMap<>();
-    private SeleniumTest testCase = new SeleniumTest();
+    private SeleniumTest seleniumTest = new SeleniumTest();
     WebDriver driver;
     public BasePage(WebDriver driver) {
         this.driver = driver;
@@ -58,9 +58,9 @@ public class BasePage {
 //            e.printStackTrace();
 //        }
         List<HashMap<String, Object>> steps = yamlSource.get(method);
-        testCase.steps = steps;
-        testCase.data = Arrays.asList("");
-        testCase.run();
+        seleniumTest.steps = steps;
+        seleniumTest.data = Arrays.asList("");
+        seleniumTest.run();
     }
 
 
