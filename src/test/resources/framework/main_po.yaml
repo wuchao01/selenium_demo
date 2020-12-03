@@ -1,5 +1,9 @@
 
-steps:
+init:
   - chrome: {}
   - get: "https://ceshiren.com"
   - implicitlyWait: 5
+
+search:
+  - find: { id: search-button }
+  - click: { }

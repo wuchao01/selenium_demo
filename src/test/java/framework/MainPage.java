@@ -16,7 +16,7 @@ public class MainPage extends BasePage{
       driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
    }
 
-   public SearchPage mainSearch(){
+   public SearchPage Search(){
       return search = new SearchPage(driver);
    }
 }

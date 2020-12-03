@@ -1,8 +1,5 @@
 package framework;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,8 +7,6 @@ import java.util.List;
 public class TestCase {
     public List<String> data;
     public List<HashMap<String, Object>> steps;
-    public WebDriver driver;
-    public WebElement element;
     public int index = 0;
 
     public Object getValue(HashMap<String,Object> step, String key){
@@ -27,7 +22,7 @@ public class TestCase {
     public List<TestCase> testCaseGenerate(){
         List<TestCase> testCaseList = new ArrayList();
         for (int i = 0; i < data.size(); i++) {
-            SeleniumTest testCaseNew = new SeleniumTest();
+            POTestCase testCaseNew = new POTestCase();
             testCaseNew.index = i;
             testCaseNew.steps = steps;
             testCaseNew.data = data;

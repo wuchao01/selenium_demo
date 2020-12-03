@@ -2,6 +2,7 @@ package framework;
 
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class SeleniumTest extends TestCase{
-    private ChromeDriver driver;
+    private WebDriver driver;
     private WebElement currentElement;
 
     public void run(){

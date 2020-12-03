@@ -5,7 +5,9 @@ data:
 steps:
 #  反射用第一个init，yaml的PO驱动用第二个
 #  - init: [ mainPage,framework.MainPage ]
-  - init: [ mainPage,"main_po.yaml" ]
+  - init: [ mainPage,main_po.yaml ]
   - mainPage.search: {}
+  - init: [ searchPage,search_po.yaml ]
+  - searchPage.search: {}
 #  - find: { id: "search-term" }
 #  - sendkeys: "$data"
